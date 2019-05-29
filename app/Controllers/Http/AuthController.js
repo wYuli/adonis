@@ -31,13 +31,11 @@ class AuthController {
           return response.json({message: 'You are not registered!'})
         }
       }
-      async getPosts({request, response}) {
-        let posts = await Post.query().with('user').fetch()
+    async getPosts({request, response}) {
+    let posts = await Post.query().with('user').fetch()
 
-        return response.json(posts)
-      }
-
-    }
+    return response.json(posts)
+    }  
 }
 
 module.exports = AuthController
