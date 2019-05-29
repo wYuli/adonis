@@ -1,5 +1,7 @@
 'use strict'
 
+import { get } from 'http';
+
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -17,3 +19,11 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
+
+//User routes
+Route.get('/users', 'UserController.index').as('users')
+Route.post("/users", "UserController.store")
+Route.get('/users/:id', 'UserController.edit')
+Route.postg("/users-save/:id", "UserController.save")
+Route.get("/users/delete/:id", "UserController.destroy")
+
