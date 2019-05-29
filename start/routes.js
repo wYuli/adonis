@@ -20,6 +20,14 @@ const Route = use('Route')
 
 Route.on('/').render('welcome')
 
+Route.post('/register', 'AuthController.register')
+Route.post('/login', 'AuthController.login')
+
+Route.put('/posts/:id', 'PostController.update').middleware('auth')
+Route.delete('posts/id', 'PostController.delete').middleware('auth')
+Route.post('/posts', 'PostController.store').middleware('auth')
+Route.get('/posts', 'PostController.getPosts');
+
 //User routes
 Route.get('/users', 'UserController.index').as('users')
 Route.post("/users", "UserController.store")

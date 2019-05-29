@@ -41,6 +41,17 @@ class PostController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    try {
+      // if (await auth.check()) {
+      let post = await auth.user.posts().create(request.all())
+      await post.load('user');
+      return response.json(post)
+      // }
+
+    } catch (e) {
+      console.log(e)
+      return response.json({message: 'You are not authorized to perform this action'})
+    }
   }
 
   /**
@@ -76,6 +87,14 @@ class PostController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+    let post = await Post.find(params.id)
+    post.title = request.input('title')
+    post.description = request.input('description');
+
+    await post.save()
+    await post.load('user');
+
+    return response.json(post)
   }
 
   /**
@@ -87,6 +106,12 @@ class PostController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+  }
+  async delete({auth, params, response}) {
+
+    await Post.find(params.id).delete()
+
+    return response.json({message: 'Post has been deleted'})
   }
 }
 
